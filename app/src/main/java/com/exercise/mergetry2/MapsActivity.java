@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
@@ -45,9 +44,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener {
@@ -103,6 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapLongClickListener(this);
         mMap.setOnMarkerClickListener(this);
 
+        // Monitoring the DB Activity
         dbRefPlace.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NotNull DataSnapshot dataSnapshot, String s) {
@@ -157,7 +155,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onChildRemoved(@NotNull DataSnapshot dataSnapshot) {
-//                 When markers are removed from
+                //When markers are removed from
                 if (markers.containsKey(dataSnapshot.getKey())) {
                     Marker deadMarker = markers.get(dataSnapshot.getKey());
                     if (deadMarker != null) {
@@ -186,6 +184,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        // Enable and Zoom to User Location if permission is accessed
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
             enableUserLocation();
@@ -196,6 +195,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    @Override
+    public void onMapLongClick(@NonNull @NotNull LatLng latLng) {
+        int type = (int)(Math.random() * 5 + 1);
+        Place place = new Place(latLng.latitude, latLng.longitude, type);
+        dauPlace.add(place).addOnSuccessListener(unused -> {
+            Log.d(TAG, "onSuccess: Add place successfully!!");
+            Toast.makeText(MapsActivity.this,"Successfully",Toast.LENGTH_SHORT).show();
+        }).addOnFailureListener(e -> Log.d(TAG, "onFailure: Failed to add place..."));
+    }
+
+    @Override
+    public boolean onMarkerClick(@NonNull @NotNull Marker marker) {
+//        dauPlace = new DAUPlace();
+//        dauPlace.remove(marker.getTitle())
+//                .addOnSuccessListener(unused -> Toast.makeText(MapsActivity.this,"Successfully deleted",Toast.LENGTH_SHORT).show())
+//                .addOnFailureListener(e -> Toast.makeText(MapsActivity.this,"Failed delete place...",Toast.LENGTH_SHORT).show());
+        Intent intent = new Intent(MapsActivity.this, ShowActivity.class);
+        intent.putExtra("ID",marker.getTitle());
+        startActivity(intent);
+        return false;
+    }
+
+
+    //  Return the permission result
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == ACCESS_LOCATION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                enableUserLocation();
+                zoomToUserLocation();
+            }  //We can show a dialog that permission is not granted
+
+        }
+    }
+
+    // Check Permission Activity
     private void enableUserLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -203,6 +239,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
     }
 
+    // Zoom to user's place
     private void zoomToUserLocation() {
         //Move camera to user's location
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -220,41 +257,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         locationTask.addOnFailureListener(e -> Log.d(TAG, "onFailure: zoomToUserLocation Failed"));
 
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == ACCESS_LOCATION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                enableUserLocation();
-                zoomToUserLocation();
-            }  //We can show a dialog that permission is not granted
-
-        }
-    }
-
-    @Override
-    public void onMapLongClick(@NonNull @NotNull LatLng latLng) {
-        int type = (int)(Math.random() * 5 + 1);
-        Place place = new Place(latLng.latitude, latLng.longitude, type);
-        dauPlace.add(place).addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: Add place successfully!!");
-            Toast.makeText(MapsActivity.this,"Successfully",Toast.LENGTH_SHORT).show();
-        }).addOnFailureListener(e -> Log.d(TAG, "onFailure: Failed to add place..."));
-//        mMap.addMarker(new MarkerOptions().position(latLng).title(latLng.latitude +", "+ latLng.longitude).draggable(true)
-//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
-    }
-
-    @Override
-    public boolean onMarkerClick(@NonNull @NotNull Marker marker) {
-//        dauPlace = new DAUPlace();
-//        dauPlace.remove(marker.getTitle())
-//                .addOnSuccessListener(unused -> Toast.makeText(MapsActivity.this,"Successfully deleted",Toast.LENGTH_SHORT).show())
-//                .addOnFailureListener(e -> Toast.makeText(MapsActivity.this,"Failed delete place...",Toast.LENGTH_SHORT).show());
-        Intent intent = new Intent(MapsActivity.this, ShowActivity.class);
-        intent.putExtra("ID",marker.getTitle());
-        startActivity(intent);
-        return false;
     }
 }
