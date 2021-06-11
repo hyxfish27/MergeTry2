@@ -134,8 +134,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     Marker myMarker = mMap.addMarker(new MarkerOptions()
                             .position(new LatLng(place.getPlatitude(), place.getPlongitude()))
-                            .title(dataSnapshot.getKey())
                             .icon(BitmapDescriptorFactory.fromBitmap(bitmapMarker)));
+
+                    myMarker.setTag(dataSnapshot.getKey());
+                    dbRefPlace.child(dataSnapshot.getKey()).child("markerID").setValue(dataSnapshot.getKey());
 
                     // cache the marker locally
                     markers.put(dataSnapshot.getKey(), myMarker);
@@ -212,7 +214,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                .addOnSuccessListener(unused -> Toast.makeText(MapsActivity.this,"Successfully deleted",Toast.LENGTH_SHORT).show())
 //                .addOnFailureListener(e -> Toast.makeText(MapsActivity.this,"Failed delete place...",Toast.LENGTH_SHORT).show());
         Intent intent = new Intent(MapsActivity.this, ShowActivity.class);
-        intent.putExtra("ID",marker.getTitle());
+        intent.putExtra("ID",marker.getTag().toString());
         startActivity(intent);
         return false;
     }

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="380dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_gravity="center"
+    android:layout_centerHorizontal="true"
+    android:layout_height="660dp"
+    android:background="@drawable/see_charity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardPreventCornerOverlap="false"
+        app:cardCornerRadius="40dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/imageViewHelp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/all_help_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageViewClose"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/all_close"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/font_primary"
+                android:text="好康"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewClose"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewClose"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imageViewHelp"
+                app:layout_constraintTop_toTopOf="@+id/imageViewClose" />
+
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/PosterImg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4"
+                app:srcCompat="@drawable/see_likeicon" />
+
+            <TextView
+                android:id="@+id/likeNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="Like"
+                android:textSize="32sp"
+                android:fontFamily="@string/font_primary"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/btnPlay"
+                app:layout_constraintStart_toEndOf="@+id/likeNum"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4"
+                app:layout_constraintVertical_bias="0.514"
+                app:srcCompat="@drawable/see_timeicon" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="Time"
+                android:textSize="32sp"
+                android:fontFamily="@string/font_primary"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+            <ImageView
+                android:id="@+id/PosterImg"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/see_myicon"
+                app:layout_constraintBottom_toBottomOf="@+id/btnPlay"
+                app:layout_constraintEnd_toStartOf="@+id/btnPlay"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnPlay" />
+
+            <TextView
+                android:id="@+id/posterName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="poster"
+                android:textSize="24sp"
+                android:fontFamily="@string/font_primary"
+                app:layout_constraintEnd_toEndOf="@+id/PosterImg"
+                app:layout_constraintStart_toStartOf="@+id/PosterImg"
+                app:layout_constraintTop_toBottomOf="@+id/PosterImg" />
+
+
+            <ImageButton
+                android:id="@+id/btnPlay"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@color/transparent"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="@+id/btnLike"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.515"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnLike"
+                app:srcCompat="@drawable/see_play" />
+
+            <TextView
+                android:id="@+id/btnPlayText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="播放中..."
+                android:textSize="24sp"
+                android:fontFamily="@string/font_primary"
+                app:layout_constraintEnd_toEndOf="@+id/btnPlay"
+                app:layout_constraintStart_toStartOf="@+id/btnPlay"
+                app:layout_constraintTop_toBottomOf="@+id/btnPlay" />
+
+            <ImageButton
+                android:id="@+id/btnLike"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="50dp"
+                android:background="@color/transparent"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/btnPlay"
+                app:srcCompat="@drawable/see_unlike" />
+
+            <TextView
+                android:id="@+id/btnLikeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="讚"
+                android:textSize="24sp"
+                android:fontFamily="@string/font_primary"
+                app:layout_constraintEnd_toEndOf="@+id/btnLike"
+                app:layout_constraintStart_toStartOf="@+id/btnLike"
+                app:layout_constraintTop_toBottomOf="@+id/btnLike" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="24dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textActivity"
+                app:srcCompat="@drawable/cat_1" />
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

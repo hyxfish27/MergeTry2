@@ -36,7 +36,6 @@
             android:scaleType="centerInside"
             android:src="@drawable/all_help_button" />
 
-
     </LinearLayout>
 
     <LinearLayout
@@ -84,7 +83,7 @@
             app:srcCompat="@drawable/see_myicon" />
 
         <ImageView
-            android:id="@+id/btnPlay"
+            android:id="@+id/btnLike"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
